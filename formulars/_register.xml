@@ -1,0 +1,62 @@
+<Formulars>
+  <Formular>
+    <Name>Demo (test purpose)</Name>
+    <Form>forms/demo</Form>
+  </Formular>
+  <Formular>
+    <Name>Stage (home)</Name>
+    <Form>forms/stage</Form>
+    <Template>templates/search/stage</Template>
+  </Formular>
+  <!-- Entities -->
+  <Formular>
+    <Name>Case</Name>
+    <Form>forms/case</Form>
+  </Formular>
+  <Formular>
+    <Name>Person</Name>
+    <Form>forms/person</Form>
+  </Formular>
+  <Formular>
+    <Name>Person (search)</Name>
+    <Form>forms/person-search</Form>
+    <Template>templates/search/persons</Template>
+  </Formular>
+  <Formular>
+    <Name>Enterprise</Name>
+    <Form>forms/enterprise</Form>
+  </Formular>
+  <Formular>
+    <Name>Enterprise (search)</Name>
+    <Form>forms/enterprise-search</Form>
+    <Template>templates/search/enterprises</Template>
+  </Formular>
+  <!-- Documents -->
+  <Formular>
+    <Name>Coach assignment</Name>
+    <Form>forms/coaching-assignment</Form>
+  </Formular>
+  <Formular>
+    <Name>Sample</Name>
+    <Form>forms/sample</Form>
+  </Formular>
+  <!-- Management -->
+  <Formular>
+    <Name>User profile</Name>
+    <Form>forms/profile</Form>
+  </Formular>
+  <Formular>
+    <Name>User account</Name>
+    <Form>forms/account</Form>
+  </Formular>
+  <!-- Documents -->
+  <Formular>
+    <Name>Mail composition</Name>
+    <Form>forms/mail</Form>
+  </Formular>
+  <!-- Statistics -->
+  <Formular>
+    <Name>Cases statistics</Name>
+    <Form>forms/stats-cases</Form>
+  </Formular>
+</Formulars>

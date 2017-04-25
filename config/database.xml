@@ -1,0 +1,10 @@
+<Database>
+  <Policies>
+    <Policy Name="users" Owner="admin" Group="users" Perms="rwxrwxr--"/>
+  </Policies>
+  <Entities>
+    <Entity Name="person" Collection="persons" Resource="persons.xml" Root="Persons" Policy="users"/>
+    <Entity Name="enterprise" Collection="enterprises" Resource="enterprises.xml" Root="Enterprises" Policy="users"/>
+    <Entity Name="case" Collection="cases" Resource="case.xml" Root="Case" Policy="users"/>
+  </Entities>
+</Database>

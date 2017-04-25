@@ -1,0 +1,187 @@
+<Templates>
+  <Template Name="case" Mode="create">
+<![CDATA[
+  <Case>
+    <No>{ $id }</No>
+    <CreationDate>{ $date }</CreationDate>
+    <StatusHistory>
+        <CurrentStatusRef>1</CurrentStatusRef>
+        <Status>
+            <Date>{ $date }</Date>
+            <ValueRef>1</ValueRef>
+        </Status>
+    </StatusHistory>
+    <Information LastModification="{ $date }">
+      <ClientEnterprise>
+        { $form/ClientEnterprise/EnterpriseRef }
+      </ClientEnterprise>
+      { $form/ContactPerson }
+    </Information>
+    <Management>
+      <AccountManagerRef>{ $uid }</AccountManagerRef>
+      { $form/Conformity }
+    </Management>
+    <NeedsAnalysis>
+      { $form/ContactPerson }
+      { $form/NeedsAnalysis/Context }
+      { $form/NeedsAnalysis/Impact }
+      { $form/NeedsAnalysis/Comments }
+    </NeedsAnalysis>
+    <Evaluation>
+      <KAMReport>
+        { $form/Feedback/Recognition }
+        { $form/Feedback/Tools }
+      </KAMReport>
+    </Evaluation>
+  </Case>
+]]>
+  </Template>
+  <Template Name="case" Mode="update">
+<![CDATA[
+  <XAL>
+    <XALAction Type="replace">
+      <Information LastModification="{ $date }">
+        <ClientEnterprise>
+          { $form/ClientEnterprise/EnterpriseRef }
+        </ClientEnterprise>
+        { $form/ContactPerson }
+      </Information>
+      <Management>
+        <AccountManagerRef>{ $case/Management/AccountManagerRef/text() }</AccountManagerRef>
+        { $form/Conformity }
+      </Management>
+      <NeedsAnalysis>
+        { $form/ContactPerson }
+        { $form/NeedsAnalysis/Context }
+        { $form/NeedsAnalysis/Impact }
+        { $form/NeedsAnalysis/Comments }
+      </NeedsAnalysis>
+    </XALAction>
+    <XALAction Type="replace">
+      <Evaluation>
+        <KAMReport>
+          { $form/Feedback/Recognition }
+          { $form/Feedback/Tools }
+        </KAMReport>
+      </Evaluation>
+    </XALAction>
+  </XAL>
+]]>
+  </Template>
+  <Template Name="case" Mode="read">
+<![CDATA[
+  <Case>
+    <Title>{ custom:gen-case-title($case, $lang) }</Title>
+    <AccountManagerRef _Unref="display:gen-person-name">{ $case/Management/AccountManagerRef/text() }</AccountManagerRef>
+    <No>{ $case/No/text() }</No>
+    <CreationDate>{ $case/CreationDate/text() }</CreationDate>
+    <ClientEnterprise>
+      <EnterpriseRef>{ $case/Information/ClientEnterprise/EnterpriseRef/text() }</EnterpriseRef>
+    </ClientEnterprise>
+    { $case/NeedsAnalysis/ContactPerson }
+    { $case/Management/Conformity }
+    <NeedsAnalysis>
+      { $case/NeedsAnalysis/Context }
+      { $case/NeedsAnalysis/Impact }
+      { $case/NeedsAnalysis/Comments }
+    </NeedsAnalysis>
+    <Feedback>
+      { $case/Evaluation/KAMReport/Recognition }
+      { $case/Evaluation/KAMReport/Tools }
+    </Feedback>
+  </Case>
+]]>
+  </Template>
+  <Template Name="activity" Mode="create">
+<![CDATA[
+  <Activity>
+    <No>{ $id }</No>
+    <CreationDate>{ $date }</CreationDate>
+    <StatusHistory>
+      <CurrentStatusRef>1</CurrentStatusRef>
+      <Status>
+        <Date>{ $date }</Date>
+        <ValueRef>1</ValueRef>
+      </Status>
+    </StatusHistory>
+    { $case/NeedsAnalysis }
+    <FinalReportApproval LastModification="{ $date }">
+      { $case/Evaluation/KAMReport/Recognition }
+      { $case/Evaluation/KAMReport/Tools }
+    </FinalReportApproval>
+  </Activity>
+]]>
+  </Template>
+  <Template Name="assignment" Mode="create">
+<![CDATA[
+<XAL>
+  <XALAction Type="replace">
+    <Assignment LastModification="{ $date }">
+      { $form/*[not(local-name() = 'KAMReportCAProxy')] }
+      <AssignedByRef>{ $uid }</AssignedByRef>
+      <Date>{ $date }</Date>
+    </Assignment>
+  </XALAction>
+  <XALAction Type="replace">
+    <FinalReportApproval LastModification="{ $date }">
+      { $activity/FinalReportApproval/Recognition }
+      { $activity/FinalReportApproval/Tools }
+      { $form/KAMReportCAProxy/Profiles }
+    </FinalReportApproval>
+  </XALAction>
+</XAL>
+]]>
+  </Template>
+  <Template Name="assignment" Mode="update">
+<![CDATA[
+<XAL>
+  <XALAction Type="replace">
+    <Assignment LastModification="{ $date }">
+      { $form/*[not(local-name() = 'KAMReportCAProxy')] }
+      <AssignedByRef>{ $uid }</AssignedByRef>
+      <Date>{ $date }</Date>
+    </Assignment>
+  </XALAction>
+  <XALAction Type="replace">
+    <FinalReportApproval LastModification="{ $date }">
+      { $activity/FinalReportApproval/Recognition }
+      { $activity/FinalReportApproval/Tools }
+      { $form/KAMReportCAProxy/Profiles }
+    </FinalReportApproval>
+  </XALAction>
+</XAL>
+]]>
+  </Template>
+  <Template Name="assignment" Mode="read">
+<![CDATA[
+  <Assignment>
+    { $activity/Assignment/* }
+    <KAMReportCAProxy>
+      { $activity/FinalReportApproval/Profiles }
+    </KAMReportCAProxy>
+  </Assignment>
+]]>
+  </Template>
+  <Template Name="vanilla" Mode="update">
+<![CDATA[
+  <XAL>
+    <XALAction Type="replace">
+      {
+      element { $document }
+      { 
+      attribute { 'LastModification' } { $date },
+      $form/*
+      }
+      }
+    </XALAction>
+  </XAL>
+]]>
+  </Template>
+  <Template Name="vanilla" Mode="read">
+<![CDATA[
+  element { $document }
+  { $activity/*[local-name(.) eq $document]/* }
+]]>
+  </Template>
+</Templates>
+
