@@ -16,7 +16,19 @@
        Note: Ajax error should have cut the pipeline because of status code and not reach that code
        -->
   <xsl:template match="/">
-    <xsl:apply-templates select="Display | success"/>
+    <xsl:apply-templates select="Display | success | error"/>
+  </xsl:template>
+
+  <!-- pre-check error rendering -->
+  <xsl:template match="error" priority="1">
+    <site:view skin="workflow">
+      <site:win-title>
+        <title>Case Tracker Error</title>
+      </site:win-title>
+      <site:content>
+        <h2>Oops !</h2>
+      </site:content>
+    </site:view>
   </xsl:template>
 
 </xsl:stylesheet>

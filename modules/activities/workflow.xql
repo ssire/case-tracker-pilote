@@ -36,7 +36,7 @@ let $activity-no := string($cmd/resource/@name)
 let $lang := string($cmd/@lang)
 let $case := fn:collection($globals:cases-uri)/Case[No eq $case-no]
 let $activity := $case/Activities/Activity[No = $activity-no]
-let $errors := () (:access:pre-check-activity($case, $activity, $m, (), ()):)
+let $errors := custom:pre-check-activity($case, $activity, $m, (), ())
 return
   if (empty($errors)) then
     <Display ResourceNo="{$activity-no}" Mode="workflow">

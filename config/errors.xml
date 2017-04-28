@@ -509,4 +509,13 @@
   <error type="SERVICE-FORBIDDEN" code="401">
     <message lang="en">Impossible to call %s : authorization refused</message>
   </error>
+  <!-- ********************************************************************** -->
+  <!-- *********** "http://oppidoc.com/ns/xcm/database" Errors ************** -->
+  <!-- ********************************************************************** -->
+  <error type="UNKNOWN-DATABASE-POLICY" code="500">
+    <message lang="en">Unkown database policy %s</message>
+  </error>
+  <error type="MISSING-DATABASE-KEY" code="500">
+    <message lang="en">Unkown database key for %s entity, ask an administrator to check application  configuration</message>
+  </error>  
 </errors>

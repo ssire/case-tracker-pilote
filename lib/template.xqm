@@ -20,6 +20,7 @@ import module namespace oppidum = "http://oppidoc.com/oppidum/util" at "../../op
 import module namespace globals = "http://oppidoc.com/ns/xcm/globals" at "globals.xqm";
 import module namespace custom = "http://oppidoc.com/ns/xcm/custom" at "../app/custom.xqm";
 import module namespace misc = "http://oppidoc.com/ns/xcm/misc" at "../../xcm/lib/util.xqm";
+import module namespace xal = "http://oppidoc.com/ns/xcm/xal" at "../../xcm/lib/xal.xqm";
 import module namespace user = "http://oppidoc.com/ns/xcm/user" at "../../xcm/lib/user.xqm";
 import module namespace crud = "http://oppidoc.com/ns/xcm/crud" at "../../xcm/lib/crud.xqm";
 
@@ -68,7 +69,7 @@ declare function template:save-vanilla(
     if ($src) then
       let $delta := misc:prune(util:eval(string-join($src/text(), '')))
       return (
-        misc:apply-updates(if ($activity) then $activity else $case, $delta),
+        xal:apply-updates(if ($activity) then $activity else $case, $delta),
         oppidum:throw-message('ACTION-UPDATE-SUCCESS', ())
         )
     else

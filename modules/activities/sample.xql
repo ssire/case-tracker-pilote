@@ -14,6 +14,7 @@ import module namespace request="http://exist-db.org/xquery/request";
 import module namespace oppidum = "http://oppidoc.com/oppidum/util" at "../../../oppidum/lib/util.xqm";
 import module namespace globals = "http://oppidoc.com/ns/xcm/globals" at "../../lib/globals.xqm";
 import module namespace template = "http://oppidoc.com/ns/xcm/template" at "../../lib/template.xqm";
+import module namespace custom = "http://oppidoc.com/ns/xcm/custom" at "../../app/custom.xqm";
 import module namespace misc = "http://oppidoc.com/ns/xcm/misc" at "../../../xcm/lib/util.xqm";
 import module namespace access = "http://oppidoc.com/ns/xcm/access" at "../../../xcm/lib/access.xqm";
 import module namespace ajax = "http://oppidoc.com/ns/xcm/ajax" at "../../../xcm/lib/ajax.xqm";
@@ -41,7 +42,7 @@ let $activity := $case/Activities/Activity[No = $activity-no]
 let $goal := request:get-parameter('goal', 'read')
 let $target := $cmd/resource/@name
 let $root := request:get-attribute('xquery.root')
-let $errors := access:pre-check-activity($case, $activity, $m, $goal, $root)
+let $errors := custom:pre-check-activity($case, $activity, $m, $goal, $root)
 return
   if (empty($errors)) then
     if ($m = 'POST') then

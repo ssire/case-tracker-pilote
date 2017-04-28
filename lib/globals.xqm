@@ -28,9 +28,10 @@ declare variable $globals:application-uri := '/db/www/ctracker/config/applicatio
 declare variable $globals:templates-uri := '/db/sites/ctracker/global-information/templates.xml';
 declare variable $globals:variables-uri := '/db/www/ctracker/config/variables.xml';
 declare variable $globals:stats-formulars-uri := '/db/www/ctracker/formulars';
+declare variable $globals:database-file-uri := '/db/www/ctracker/config/database.xml';
 
 (: Application entities paths :)
-declare variable $globals:persons-uri := '/db/sites/ctracker/persons/persons.xml';
+declare variable $globals:persons-uri := '/db/sites/ctracker/persons';
 declare variable $globals:enterprises-uri := '/db/sites/ctracker/enterprises/enterprises.xml';
 declare variable $globals:cases-uri := '/db/sites/ctracker/cases';
 

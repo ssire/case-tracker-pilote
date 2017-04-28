@@ -32,7 +32,7 @@ let $cmd := oppidum:get-command()
 let $case-no := string($cmd/resource/@name)
 let $lang := string($cmd/@lang)
 let $case := fn:collection($globals:cases-uri)/Case[No eq $case-no]
-let $errors := () (:access:pre-check-case($case, $m, (), ()):)
+let $errors := custom:pre-check-case($case, $m, (), ())
 return
   if (empty($errors)) then
     <Display ResourceNo="{$case-no}" Mode="workflow">

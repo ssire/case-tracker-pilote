@@ -147,9 +147,6 @@
         </Action>
       </Document>
       <Document TabRef="coaching-assignment" Root="Assignment" Form="coaching-assignment.xml">
-        <Action Type="create">
-          <Meet>u:admin</Meet>
-        </Action>
         <Action Type="update">
           <Meet>r:kam</Meet>
         </Action>
@@ -196,6 +193,11 @@
         </Action>
         <Action Type="open">
           <Meet>s:omni g:kam r:coach</Meet>
+        </Action>
+      </Resource>
+      <Resource Name="Activity">
+        <Action Type="create">
+          <Meet>r:kam</Meet>
         </Action>
       </Resource>
       <Resource Name="Person">

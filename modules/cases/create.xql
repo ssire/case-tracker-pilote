@@ -18,9 +18,8 @@ import module namespace misc = "http://oppidoc.com/ns/xcm/misc" at "../../../xcm
 import module namespace user = "http://oppidoc.com/ns/xcm/user" at "../../../xcm/lib/user.xqm";
 import module namespace access = "http://oppidoc.com/ns/xcm/access" at "../../../xcm/lib/access.xqm";
 import module namespace ajax = "http://oppidoc.com/ns/xcm/ajax" at "../../../xcm/lib/ajax.xqm";
+import module namespace database = "http://oppidoc.com/ns/xcm/database" at "../../../xcm/lib/database.xqm";
 import module namespace enterprise = "http://oppidoc.com/ns/xcm/enterprise" at "../../../xcm/modules/enterprises/enterprise.xqm";
-
-import module namespace cases = "http://oppidoc.fr/ns/xcm/cases" at "case.xqm";
 
 declare option exist:serialize "method=xml media-type=text/xml";
 
@@ -77,33 +76,23 @@ declare function local:gen-case-for-writing( $form as element(), $id as xs:strin
 
 (: ======================================================================
    Create a new Case in database
-   $baseUrl is used to generate redirection to the case URL once finished 
+   $base-url is used to generate redirection to the case URL once finished 
    Returns a success or error response compliant with AXEL-FORMS 'save' command protocol
    ======================================================================
 :)
-declare function local:create-case( $submitted as element(), $baseUrl as xs:string, $lang as xs:string ) as element() {
+declare function local:create-case( $db-uri as xs:string, $submitted as element(), $base-url as xs:string, $lang as xs:string ) as element() {
   let $errors := local:validate-case-submission($submitted, $lang)
   return 
     if (empty($errors)) then
-      let $case-refs := cases:create-case-collection(string(current-date()))
-      let $case-uri := $case-refs[1]
-      let $index := $case-refs[2]
+      (: ideally there should be a transaction here :)
+      let $index := database:make-new-key-for($db-uri, 'case')
+      let $data := local:gen-case-for-writing($submitted, $index)
+      let $result := database:create-entity-for-key($db-uri, 'case', $data, $index)
       return 
-        if (not(empty($case-refs))) then
-          let $data := local:gen-case-for-writing($submitted, $index)
-          let $stored-path := xdb:store($case-uri, "case.xml", $data)
-          return
-            if(not($stored-path eq ())) then (
-              let $spec := fn:doc(concat('/db/www/', $globals:app-collection, '/config/database.xml'))//Entity[@Name = 'case']
-              let $policy := fn:doc(concat('/db/www/', $globals:app-collection, '/config/database.xml'))//Policy[@Name = $spec/@Policy]
-              return
-                compat:set-owner-group-permissions($stored-path, $policy/@Owner, $policy/@Group, $policy/@Perms),
-              ajax:report-success-redirect('ACTION-CREATE-SUCCESS', $index, concat($baseUrl, '/', $index))
-              )
-            else
-              oppidum:throw-error('DB-WRITE-INTERNAL-FAILURE', ())
+        if (local-name($result) eq 'success') then
+          ajax:report-success-redirect('ACTION-CREATE-SUCCESS', $index, concat($base-url, '/', $index))
         else
-          oppidum:throw-error('DB-WRITE-INTERNAL-FAILURE', ())
+          $result
     else
       ajax:report-validation-errors($errors)
 };
@@ -120,7 +109,7 @@ return
                       ()
     return
       if (empty($confirm)) then
-        local:create-case($submitted, concat($cmd/@base-url,$cmd/@trail), $lang)
+        local:create-case($cmd/@db, $submitted, concat($cmd/@base-url,$cmd/@trail), $lang)
       else
         $confirm
   else  (: brings up a case creation formular :)

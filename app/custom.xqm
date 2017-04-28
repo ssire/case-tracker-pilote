@@ -24,11 +24,13 @@ xquery version "1.0";
 module namespace custom = "http://oppidoc.com/ns/xcm/custom";
 
 import module namespace request="http://exist-db.org/xquery/request";
+import module namespace oppidum = "http://oppidoc.com/oppidum/util" at "../../../oppidum/lib/util.xqm";
 import module namespace globals = "http://oppidoc.com/ns/xcm/globals" at "../lib/globals.xqm";
 import module namespace display = "http://oppidoc.com/ns/xcm/display" at "../../xcm/lib/display.xqm";
 import module namespace cache = "http://oppidoc.com/ns/xcm/cache" at "../../xcm/lib/cache.xqm";
 import module namespace form = "http://oppidoc.com/ns/xcm/form" at "../../xcm/lib/form.xqm";
 import module namespace user = "http://oppidoc.com/ns/xcm/user" at "../../xcm/lib/user.xqm";
+import module namespace access = "http://oppidoc.com/ns/xcm/access" at "../../xcm/lib/access.xqm";
 import module namespace enterprise = "http://oppidoc.com/ns/xcm/enterprise" at "../../xcm/modules/enterprises/enterprise.xqm";
 
 declare namespace xt = "http://ns.inria.org/xtiger";
@@ -103,3 +105,69 @@ declare function custom:gen-activity-title( $case as element(), $activity as ele
     )
 };
 
+(: ======================================================================
+   "All in one" utility function
+   Checks case exists and checks user has rights to execute the goal action 
+   with the given method on the given root document or has access to 
+   the whole case if the root is undefined
+   Either throws an error (and returns it) or returns the empty sequence
+   ======================================================================
+:)
+declare function custom:pre-check-case(
+  $case as element()?,
+  $method as xs:string,
+  $goal as xs:string?,
+  $root as xs:string? ) as element()*
+{
+  if (empty($case)) then
+    oppidum:throw-error('CASE-NOT-FOUND', ())
+  else if (not(access:check-user-can('open', 'Case', $case))) then
+    oppidum:throw-error("CASE-FORBIDDEN", custom:gen-case-title($case, 'en'))
+  else if ($root) then 
+    (: access to a specific case document :)
+    if (access:check-user-can(if ($method eq 'GET') then 'read' else 'update', $root, $case, ())) then
+      ()
+    else
+      oppidum:throw-error('FORBIDDEN', ())
+  else if ($method eq 'GET') then
+    (: access to case workflow view :)
+    ()
+  else
+    oppidum:throw-error("URI-NOT-FOUND", ())
+};
+
+(: ======================================================================
+   "All in one" utility function
+   Same as custom:pre-check-case but at the activity level
+   ======================================================================
+:)
+declare function custom:pre-check-activity(
+  $case as element()?,
+  $activity as element()?,
+  $method as xs:string,
+  $goal as xs:string?,
+  $root as xs:string? ) as element()*
+{
+  if (empty($case)) then
+    oppidum:throw-error('CASE-NOT-FOUND', ())
+  else if (empty($activity)) then 
+    oppidum:throw-error('ACTIVITY-NOT-FOUND', ())
+  else if (not(access:check-user-can('open', 'Case', $case))) then
+    oppidum:throw-error("CASE-FORBIDDEN", $case/Title/text())
+  else if ($root) then (: access to specific activity document :)
+    let $action := if ($method eq 'GET') then 'read' else if ($goal eq 'delete') then $goal else 'update'
+    let $control := globals:doc('application-uri')/Application/Security/Documents/Document[@Root = $root]
+    return
+      if (access:assert-user-role-for($action, $control, $case, $activity)) then
+        if (access:assert-workflow-state($action, 'Activity', $control, string($activity/StatusHistory/CurrentStatusRef))) then
+          ()
+        else
+          oppidum:throw-error('STATUS-DONT-ALLOW', ())
+      else
+        oppidum:throw-error('FORBIDDEN', ())
+
+  else if ($method eq 'GET') then (: access to activity workflow view :)
+    ()
+  else
+    oppidum:throw-error("URI-NOT-FOUND", ())
+};

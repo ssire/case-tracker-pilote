@@ -46,4 +46,7 @@
   <Global>
     <Key>cases-uri</Key>
   </Global>
+  <Global>
+    <Key>database-file-uri</Key>
+  </Global>
 </Globals>

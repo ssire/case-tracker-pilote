@@ -62,7 +62,7 @@ let $activity-no := tokenize($cmd/@trail, '/')[4]
 let $case := fn:collection($globals:cases-uri)/Case[No eq $case-no]
 let $activity := $case/Activities/Activity[No = $activity-no]
 let $goal := 'delete'
-let $errors := access:pre-check-activity($case, $activity, $m, $goal, 'Assignment')
+let $errors := custom:pre-check-activity($case, $activity, $m, $goal, 'Assignment')
 return
   if (empty($errors)) then
     let $cannot := local:validate-activity-delete($case, $activity)
