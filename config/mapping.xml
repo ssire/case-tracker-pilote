@@ -424,7 +424,9 @@
     <view src="xcm:modules/formulars/simulator.xsl"/>
     <item resource="file:///formulars/$2.xml"/>
     <action name="install" resource="">
-      <model src="xcm:modules/formulars/install.xql"/>
+      <model src="xcm:modules/formulars/install.xql">
+        <param name="sg-folder" value="eval:$globals:xcm-name"/>
+      </model>
     </action>
   </item>
   <!-- *********** -->

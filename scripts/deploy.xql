@@ -27,8 +27,10 @@ xquery version "1.0";
    November 2016 - (c) Copyright 2016 Oppidoc SARL. All Rights Reserved.
    -------------------------------------- :)
 
-declare namespace request = "http://exist-db.org/xquery/request";
 
+declare namespace skin = "http://oppidoc.com/oppidum/skin";
+
+import module namespace request = "http://exist-db.org/xquery/request";
 import module namespace xdb = "http://exist-db.org/xquery/xmldb";
 import module namespace sm = "http://exist-db.org/xquery/securitymanager";
 import module namespace globals = "http://oppidoc.com/ns/xcm/globals" at "../lib/globals.xqm";
@@ -157,12 +159,25 @@ declare function local:do-post-deploy-actions ( $dir as xs:string,  $targets as 
   (: adjusts settings to environment mode (e.g. e-mail output configuration) :)
   if ('config' = $targets) then
     let $mapping := fn:doc(concat('/db/www/', $globals:app-collection, '/config/mapping.xml'))/site
+    let $skin := fn:doc(concat('/db/www/', $globals:app-collection, '/config/skin.xml'))/skin:skin
     let $settings := fn:doc(concat('/db/www/', $globals:app-collection, '/config/settings.xml'))/Settings
     return
       (
       update value $mapping/@mode with $mode,
       <p>Set mode to { $mode }</p>,
       <p>Root mapping supported actions set to { string($mapping/@supported) }</p>,
+      if ($mapping/@key ne $globals:app-name) then (
+        update value $mapping/@key with $globals:app-name,
+        <p>Set mapping key to REST application name { $globals:app-name }</p>
+        )
+      else
+        <p>REST application name in mapping is { $globals:app-name }</p>,
+      if ($skin/@key ne $globals:app-name) then (
+        update value $skin/@key with $globals:app-name,
+        <p>Set skin key to REST application name { $globals:app-name }</p>
+        )
+      else
+        <p>REST application name in skin is { $globals:app-name }</p>,
       if  (not(exists($mapping/@base-url)) and $mode = ('test', 'prod')) then
         (
         update insert attribute { 'base-url' } {'/'} into $mapping,
@@ -224,7 +239,7 @@ declare function local:deploy ( $dir as xs:string,  $targets as xs:string*, $bas
     else
       (),
   if ('forms' = $targets) then
-    <target name="forms" base-url="{$base-url}">{ sg:gen-and-save-forms($formulars, $base-url) }</target>
+    <target name="forms" base-url="{$base-url}">{ sg:gen-and-save-forms($formulars, $base-url, $globals:xcm-name) }</target>
   else
     (),
   if (('globals', 'policies') = $targets) then
