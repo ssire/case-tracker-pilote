@@ -481,9 +481,14 @@
   <!-- **  test (optional) ** -->
   <!-- ********************** -->
   <collection name="test">
-    <item name="units" epilogue="home">
-      <model src="xcm:test/units.xql"/>
-    </item>
+    <collection name="units">
+      <item name="1" epilogue="home">
+        <model src="xcm:test/units.xql"/>
+      </item>
+      <item name="2" epilogue="home">
+        <model src="test/units.xql"/>
+      </item>
+    </collection>
     <item name="selectors" epilogue="home">
       <model src="xcm:test/selectors.xql"/>
     </item>

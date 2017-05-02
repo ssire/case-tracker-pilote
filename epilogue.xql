@@ -118,9 +118,9 @@ declare function site:navigation( $cmd as element(), $view as element() ) as ele
             if ($cmd/@mode eq 'dev') then (
               <li><a href="{$base}/../../oppidum/test/explorer?m={$globals:app-collection}">Oppidum IDE</a></li>,
               <li class="divider"></li>,
-              for $item in fn:doc(oppidum:path-to-config('mapping.xml'))/*/*[@name eq 'test']/*
-              return 
-                <li><a href="{$base}test/{$item/@name}">{$item/string(@name)}</a></li>
+              <li><a href="{$base}test/units/1">XCM unit tests</a></li>,
+              <li><a href="{$base}test/units/2">Application unit tests</a></li>,
+              <li><a href="{$base}test/selectors">Selectors unit tests</a></li>
               )
             else
               ()
