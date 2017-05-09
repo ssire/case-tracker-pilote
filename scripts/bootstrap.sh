@@ -12,6 +12,7 @@
 APPCOL='ctracker' # edit and put the same value as $globals:app-collection in globals.xqm
 ../../../../bin/client.sh -u admin -P $1 -m "/db/www/$APPCOL/mesh" --parse ../mesh
 ../../../../bin/client.sh -u admin -P $1 -m "/db/www/$APPCOL/config" --parse ../config
+../../../../bin/client.sh -u admin -P $1 -m "/db/sites/$APPCOL" -s
 CURPWD=`pwd`
 CURDIR=`dirname $CURPWD`
 CURMOD=`basename $CURDIR`
@@ -19,3 +20,4 @@ echo "update value fn:doc('/db/www/$APPCOL/config/mapping.xml')/site/@key with '
 echo "update value fn:doc('/db/www/$APPCOL/config/mapping.xml')/site/@db with '/db/sites/$APPCOL'" | ../../../../bin/client.sh -u admin -P $1 -x -s
 echo "update value fn:doc('/db/www/$APPCOL/config/mapping.xml')/site/@confbase with '/db/www/$APPCOL'" | ../../../../bin/client.sh -u admin -P $1 -x -s
 echo "update value fn:doc('/db/www/$APPCOL/config/skin.xml')/*/@key with '$CURMOD'" | ../../../../bin/client.sh -u admin -P $1 -x -s
+
