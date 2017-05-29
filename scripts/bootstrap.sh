@@ -12,7 +12,7 @@
 APPCOL='ctracker' # edit and put the same value as $globals:app-collection in globals.xqm
 ../../../../bin/client.sh -u admin -P $1 -m "/db/www/$APPCOL/mesh" --parse ../mesh
 ../../../../bin/client.sh -u admin -P $1 -m "/db/www/$APPCOL/config" --parse ../config
-../../../../bin/client.sh -u admin -P $1 -m "/db/sites/$APPCOL" -s
+echo "''" | ../../../../bin/client.sh -u admin -P $1 -m "/db/sites/$APPCOL" -x -s
 CURPWD=`pwd`
 CURDIR=`dirname $CURPWD`
 CURMOD=`basename $CURDIR`

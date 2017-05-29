@@ -196,6 +196,7 @@
     <Translation key="action.edit">Edit</Translation>
     <Translation key="action.correct">Correct</Translation>
     <Translation key="action.cancel">Cancel</Translation>
+    <Translation key="action.clear">Clear</Translation>
     <Translation key="action.delete">Delete</Translation>
     <Translation key="action.print">Print</Translation>
     <Translation key="action.email">Send Email</Translation>
