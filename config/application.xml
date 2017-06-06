@@ -142,6 +142,9 @@
     <Documents>
       <!-- Documents -->
       <Document TabRef="case-info" Root="Case">
+        <Action Type="read">
+          <Meet>r:kam</Meet>
+        </Action>
         <Action Type="update">
           <Meet>r:kam</Meet>
         </Action>
@@ -189,10 +192,10 @@
     <Resources>
       <Resource Name="Case">
         <Action Type="create">
-          <Meet>g:kam</Meet>
+          <Meet>g:account-manager</Meet>
         </Action>
         <Action Type="open">
-          <Meet>s:omni g:kam r:coach</Meet>
+          <Meet>s:omni r:kam r:coach</Meet>
         </Action>
       </Resource>
       <Resource Name="Activity">
@@ -201,17 +204,31 @@
         </Action>
       </Resource>
       <Resource Name="Person">
+        <Action Type="create">
+          <Meet>g:account-manager</Meet>
+        </Action>
         <Action Type="update">
           <Meet Format="eval">user:get-current-person-id() eq $resource/Id/text()</Meet>
+        </Action>
+        <Action Type="delete">
+          <Meet>g:account-manager</Meet>
+        </Action>
+      </Resource>
+      <Resource Name="Enterprise">
+        <Action Type="create">
+          <Meet>g:account-manager</Meet>
+        </Action>
+        <Action Type="delete">
+          <Meet>g:account-manager</Meet>
         </Action>
       </Resource>
     </Resources>
     <Roles>
       <Role Name="kam">
-        <Meet Format="eval">$uid = $case/Management/AccountManagerRef/text()</Meet>
+        <Meet Format="eval">$uid = $subject/Management/AccountManagerRef/text()</Meet>
       </Role>
       <Role Name="coach">
-        <Meet Format="eval">$uid = $activity/Assignment/ResponsibleCoachRef/text()</Meet>
+        <Meet Format="eval">$uid = $object/Assignment/ResponsibleCoachRef/text()</Meet>
       </Role>
     </Roles>
     <Omnipotent>

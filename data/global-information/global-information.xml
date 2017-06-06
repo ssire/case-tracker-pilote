@@ -1,211 +1,211 @@
 <GlobalInformation>
   <Description Lang="en" Role="normative">
-    <Selector Name="CaseWorkflowStatus" Value="Id" Label="Name" W="10">
+    <Selector Name="CaseWorkflowStatus" W="10">
       <Option>
-        <Id>1</Id>
+        <Value>1</Value>
         <Name>Active</Name>
       </Option>
       <Option Type="final">
-        <Id>10</Id>
+        <Value>10</Value>
         <Name>No coaching</Name>
       </Option>
       <Option Type="final">
-        <Id>12</Id>
+        <Value>12</Value>
         <Name>Closed</Name>
       </Option>
     </Selector>
-    <Selector Name="ActivityWorkflowStatus" Value="Id" Label="Name" W="10">
+    <Selector Name="ActivityWorkflowStatus" W="10">
       <Option>
-        <Id>1</Id>
+        <Value>1</Value>
         <Name>Coach assignment</Name>
       </Option>
       <Option>
-        <Id>2</Id>
+        <Value>2</Value>
         <Name>Coaching plan</Name>
       </Option>
       <Option>
-        <Id>3</Id>
+        <Value>3</Value>
         <Name>Consultation</Name>
       </Option>
       <Option>
-        <Id>4</Id>
+        <Value>4</Value>
         <Name>Coach contracting</Name>
       </Option>
       <Option>
-        <Id>5</Id>
+        <Value>5</Value>
         <Name>Coaching report</Name>
       </Option>
       <Option Deprecated="legacy">
-        <Id>6</Id>
+        <Value>6</Value>
         <Name>KAM report</Name>
       </Option>
       <Option>
-        <Id>7</Id>
+        <Value>7</Value>
         <Name>Report approval</Name>
       </Option>
       <Option>
-        <Id>8</Id>
+        <Value>8</Value>
         <Name>Feedbacks (KAM)</Name>
       </Option>
       <Option Type="final">
-        <Id>9</Id>
+        <Value>9</Value>
         <Name>Rejected</Name>
       </Option>
       <Option Type="final">
-        <Id>10</Id>
+        <Value>10</Value>
         <Name>Closed</Name>
       </Option>
       <Option Type="final">
-        <Id>11</Id>
+        <Value>11</Value>
         <Name>Evaluated</Name>
       </Option>
     </Selector>
-    <Selector Name="Functions" Value="Id" Label="Name">
+    <Selector Name="Functions">
       <Description>User's functions with associated database roles</Description>
       <Option Group="admin-system" Role="admin-system" Sight="omni">
-        <Id>1</Id>
+        <Value>1</Value>
         <Name>System Administrator</Name>
         <Brief>SysAdmin</Brief>
       </Option>
       <Option Group="account-manager" Role="account-manager">
-        <Id>2</Id>
+        <Value>2</Value>
         <Name>Account Manager</Name>
         <Brief>KAM</Brief>
       </Option>
       <Option Role="coach">
-        <Id>4</Id>
+        <Value>4</Value>
         <Name>Coach</Name>
         <Brief>Coach</Brief>
       </Option>
       <Option Group="developer" Role="developer">
-        <Id>99</Id>
+        <Value>99</Value>
         <Name>Software Developer</Name>
         <Brief>Dev</Brief>
       </Option>
     </Selector>
-    <Selector Name="Services" Value="Id" Label="Name" Test="Services">
+    <Selector Name="Services" Test="Services">
       <Description>Services associated with some roles</Description>
       <Option>
-        <Id>2</Id>
+        <Value>2</Value>
         <Name>Business</Name>
       </Option>
       <Option>
-        <Id>1</Id>
+        <Value>1</Value>
         <Name>Organisation</Name>
       </Option>
       <Option>
-        <Id>3</Id>
+        <Value>3</Value>
         <Name>Financing</Name>
       </Option>
       <Option>
-        <Id>4</Id>
+        <Value>4</Value>
         <Name>Cooperation</Name>
       </Option>
     </Selector>
-    <Selector Name="Sizes" Value="Id" Label="Name">
+    <Selector Name="Sizes">
       <Description>Enterprise size</Description>
       <Option>
-        <Id>1</Id>
+        <Value>1</Value>
         <Name>Micro (1-9 employees)</Name>
       </Option>
       <Option>
-        <Id>2</Id>
+        <Value>2</Value>
         <Name>Small (10-49 employees)</Name>
       </Option>
       <Option>
-        <Id>3</Id>
+        <Value>3</Value>
         <Name>Medium (50-249 employees)</Name>
       </Option>
       <Option>
-        <Id>4</Id>
+        <Value>4</Value>
         <Name>Large (250 employees and more)</Name>
       </Option>
       <Option>
-        <Id>5</Id>
+        <Value>5</Value>
         <Name>Other</Name>
       </Option>
     </Selector>
-    <Selector Name="InitialContexts" Value="Id" Label="Name" Test="Initial case contexts">
+    <Selector Name="InitialContexts" Test="Initial case contexts">
       <Option>
-        <Id>1</Id>
+        <Value>1</Value>
         <Name>Seed stage</Name>
       </Option>
       <Option>
-        <Id>3</Id>
+        <Value>3</Value>
         <Name>Project-to-project stage</Name>
       </Option>
       <Option>
-        <Id>2</Id>
+        <Value>2</Value>
         <Name>Upscaling stage</Name>
       </Option>
       <Option>
-        <Id>4</Id>
+        <Value>4</Value>
         <Name>Expansion stage</Name>
       </Option>
       <Option>
-        <Id>6</Id>
+        <Value>6</Value>
         <Name>Renewal stage</Name>
       </Option>
       <Option>
-        <Id>5</Id>
+        <Value>5</Value>
         <Name>Consolidation stage</Name>
       </Option>
     </Selector>
-    <Selector Name="TargetedContexts" Value="Id" Label="Name" Test="Targeted case contexts">
+    <Selector Name="TargetedContexts" Test="Targeted case contexts">
       <Option>
-        <Id>1</Id>
+        <Value>1</Value>
         <Name>Seed stage</Name>
       </Option>
       <Option>
-        <Id>3</Id>
+        <Value>3</Value>
         <Name>Project-to-project stage</Name>
       </Option>
       <Option>
-        <Id>2</Id>
+        <Value>2</Value>
         <Name>Upscaling stage</Name>
       </Option>
       <Option>
-        <Id>4</Id>
+        <Value>4</Value>
         <Name>Expansion stage</Name>
       </Option>
       <Option>
-        <Id>6</Id>
+        <Value>6</Value>
         <Name>Renewal stage</Name>
       </Option>
       <Option>
-        <Id>5</Id>
+        <Value>5</Value>
         <Name>Consolidation stage</Name>
       </Option>
     </Selector>
-    <Selector Name="RatingScales" Value="Id" Label="Name" Test="Rating scale">
+    <Selector Name="RatingScales" Test="Rating scale">
       <Option>
-        <Id>5</Id>
+        <Value>5</Value>
         <Name>Strongly disagree</Name>
       </Option>
       <Option>
-        <Id>4</Id>
+        <Value>4</Value>
         <Name>Disagree</Name>
       </Option>
       <Option>
-        <Id>3</Id>
+        <Value>3</Value>
         <Name>Neutral</Name>
       </Option>
       <Option>
-        <Id>2</Id>
+        <Value>2</Value>
         <Name>Agree</Name>
       </Option>
       <Option>
-        <Id>1</Id>
+        <Value>1</Value>
         <Name>Strongly agree</Name>
       </Option>
     </Selector>
-    <Selector Name="YesNoScales" Value="Id" Label="Name" Test="Yes or no">
+    <Selector Name="YesNoScales" Test="Yes or no">
       <Option>
-        <Id>1</Id>
+        <Value>1</Value>
         <Name>Yes</Name>
       </Option>
       <Option>
-        <Id>2</Id>
+        <Value>2</Value>
         <Name>No</Name>
       </Option>
     </Selector>

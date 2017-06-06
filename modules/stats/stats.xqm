@@ -76,26 +76,23 @@ declare function stats:gen-selector-domain( $name as xs:string, $selector as xs:
         for $v in $sel//Option
         let $concatWithId := starts-with($sel/@Label, 'V+')
         let $ltag := replace($sel/@Label, '^V\+', '')
-        let $vtag := string($sel/@Value)
         return
           <Labels>
             { 
               if ($concatWithId) then
-                concat($v/*[local-name(.) eq $vtag], ' - ', $v/*[local-name(.) eq $ltag])
+                concat($v/Value, ' - ', $v/*[local-name(.) eq $ltag])
               else
-                $v/*[local-name(.) eq $ltag]/text()
+                $v/Name/text()
             }
           </Labels>,
         for $v in $sel//Option
-        let $tag := string($sel/@Value)
         return
-          local:gen-values($v/*[local-name(.) eq $tag], $literal)
+          local:gen-values($v/Value, $literal)
         )
       else (: flat selector :)
         (
         for $v in $sel/Option
-        let $tag := string($sel/@Label)
-        let $l := $v/*[local-name(.) eq $tag]/text()
+        let $l := $v/Name/text()
         return
           <Labels>
             { 
@@ -106,9 +103,8 @@ declare function stats:gen-selector-domain( $name as xs:string, $selector as xs:
             }
           </Labels>,
         for $v in $sel/Option
-        let $tag := string($sel/@Value)
         return
-          local:gen-values($v/*[local-name(.) eq $tag], $literal)
+          local:gen-values($v/Value, $literal)
         )
     }
 };
@@ -148,7 +144,7 @@ declare function stats:gen-workflow-status-domain( $tag as xs:string, $name as x
         <Labels>{ $v/Name/text() }</Labels>,
       for $v in $set/Option
       return
-        <Values>{ $v/Id/text() }</Values>
+        <Values>{ $v/Value/text() }</Values>
       )
     }
 };

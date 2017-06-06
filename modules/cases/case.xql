@@ -42,10 +42,12 @@ declare function local:POST-document( $case as element(), $form as element(), $l
   return
     if ($src) then
       let $delta := util:eval(string-join($src/text(), ''))
-      return (
-        xal:apply-updates($case, $delta),
-        oppidum:throw-message('ACTION-UPDATE-SUCCESS', ())
-      )
+      let $res := xal:apply-updates($case, $delta)
+      return
+        if (local-name($res) ne 'error') then
+          oppidum:throw-message('ACTION-UPDATE-SUCCESS', ())
+        else
+          ()
     else
       oppidum:throw-error('CUSTOM', 'Missing "case" template for update mode')
 };

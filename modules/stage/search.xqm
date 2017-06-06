@@ -144,7 +144,7 @@ declare function search:find-stage-results ( $lang as xs:string ) as element() {
       { 
       local:open-access($omni-sight, (), ()),
       for $c in fn:collection($globals:cases-uri)//Case
-      let $can-case := $omni-sight or access:check-user-can('open', 'Case', $c)
+      let $can-case := $omni-sight or access:check-entity-permissions('open', 'Case', $c)
       return
         <Case>
           { local:open-access($omni-sight, $can-case, ()) }
@@ -191,7 +191,7 @@ declare function search:find-stage-results ( $filter as element(), $lang as xs:s
           (empty($country) or $e//Country = $country)
         )
       return
-        let $can-case := $omni-sight or access:check-user-can('open', 'Case', $c)
+        let $can-case := $omni-sight or access:check-entity-permissions('open', 'Case', $c)
         return
           <Case>
             { local:open-access($omni-sight, $can-case, ()) }

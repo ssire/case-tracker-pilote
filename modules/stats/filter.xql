@@ -146,7 +146,7 @@ let $action := string($cmd/@action)
 let $filter := fn:doc(oppidum:path-to-config('stats.xml'))/Statistics/Filters/Filter[@Page = $target]
 let $command := $filter/Formular/Command[@Action eq $action]
 return
-  (: TODO: use access:check-user-can instead and move spec to application.xml ? :)
+  (: TODO: use access:check-*-permissions instead and move spec to application.xml ? :)
   if (access:check-rule(string($command/@Allow))) then 
     <DataSet Size="{count($cases)}">
       <Name>{ local-name($submitted) }</Name>

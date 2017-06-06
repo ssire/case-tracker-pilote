@@ -104,7 +104,7 @@ declare function site:navigation( $cmd as element(), $view as element() ) as ele
       }
       <li>{local:gen-nav-class($name, 'about', ())}<a href="{$base}about" loc="app.nav.guidelines">About</a></li>
       {
-      if (access:check-user-can('create', 'Case')) then
+      if (access:check-entity-permissions('create', 'Case')) then
         <li>{local:gen-nav-class($name, 'create', ())}<a href="{$base}cases/create" loc="app.nav.case">Case creation</a></li>
       else
         (),

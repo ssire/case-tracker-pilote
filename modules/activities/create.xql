@@ -98,7 +98,7 @@ return
     let $omissions := workflow:validate-transition($transition, $case, ())
     return
       if (count($omissions) eq 0) then
-        if (($m = 'POST') and access:check-user-can('create', 'Activity', $case)) then
+        if (($m = 'POST') and access:check-entity-permissions('create', 'Activity', $case)) then
           (: uses current NeedsAnalysis data inside Case which should be the similar to submitted data :)
           let $needs := $case/NeedsAnalysis
           let $confirm := if (request:get-parameter('_confirmed', '0') = '0') then

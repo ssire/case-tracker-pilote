@@ -18,6 +18,7 @@ declare namespace site = "http://oppidoc.com/oppidum/site";
 import module namespace oppidum = "http://oppidoc.com/oppidum/util" at "../../oppidum/lib/util.xqm";
 import module namespace globals = "http://oppidoc.com/ns/xcm/globals" at "../lib/globals.xqm";
 import module namespace database = "http://oppidoc.com/ns/xcm/database" at "../../xcm/lib/database.xqm";
+import module namespace access = "http://oppidoc.com/ns/xcm/access" at "../../xcm/lib/access.xqm";
 
 (: ======================================================================
    NOTE: running Database test creates Case 3000 firts time, then it creates multiple Case 3000
@@ -28,11 +29,15 @@ import module namespace database = "http://oppidoc.com/ns/xcm/database" at "../.
 declare variable $local:tests := 
   <Tests xmlns="http://oppidoc.com/oppidum/site">
     <Module>
+      <Name>Others</Name>
+      <Test>access:check-entity-permissions('create', 'Case')</Test>
+    </Module>
+    <Module>
       <Name>Database</Name>
       <Test>database:make-new-key-for('/db/XXX', 'case')</Test>
       <Test>database:make-new-key-for('/db/sites/ctracker', 'case')</Test>
       <!--<Test>database:create-collection-for-key('/db/sites/ctracker', 'case', 3000)</Test>-->
-      <Test><![CDATA[database:create-entity-for-key('/db/sites/ctracker', 'case', <Case xmlns=""><No>3000</No></Case>, 3000)]]></Test>
+      <!--<Test><![CDATA[database:create-entity-for-key('/db/sites/ctracker', 'case', <Case xmlns=""><No>3000</No></Case>, 3000)]]></Test>-->
     </Module>
   </Tests>;
 

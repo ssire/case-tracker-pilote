@@ -121,14 +121,17 @@ declare function custom:pre-check-case(
 {
   if (empty($case)) then
     oppidum:throw-error('CASE-NOT-FOUND', ())
-  else if (not(access:check-user-can('open', 'Case', $case))) then
+  else if (not(access:check-entity-permissions('open', 'Case', $case))) then
     oppidum:throw-error("CASE-FORBIDDEN", custom:gen-case-title($case, 'en'))
   else if ($root) then 
-    (: access to a specific case document :)
-    if (access:check-user-can(if ($method eq 'GET') then 'read' else 'update', $root, $case, ())) then
-      ()
-    else
-      oppidum:throw-error('FORBIDDEN', ())
+    let $action := if ($method eq 'GET') then 'read' else 'update'
+    return
+      (: access to a specific case document :)
+      (: FIXME: use access:check-workflow-permissions to take into account workflow status - see below ?:)
+      if (access:check-document-permissions($action, $root, $case, ())) then
+        ()
+      else
+        oppidum:throw-error('FORBIDDEN', ())
   else if ($method eq 'GET') then
     (: access to case workflow view :)
     ()
@@ -152,9 +155,11 @@ declare function custom:pre-check-activity(
     oppidum:throw-error('CASE-NOT-FOUND', ())
   else if (empty($activity)) then 
     oppidum:throw-error('ACTIVITY-NOT-FOUND', ())
-  else if (not(access:check-user-can('open', 'Case', $case))) then
+  else if (not(access:check-entity-permissions('open', 'Case', $case))) then
     oppidum:throw-error("CASE-FORBIDDEN", $case/Title/text())
-  else if ($root) then (: access to specific activity document :)
+  else if ($root) then 
+    (: access to specific activity document :)
+    (: FIXME: use access:check-workflow-permissions to take into account workflow status - see below ?:)
     let $action := if ($method eq 'GET') then 'read' else if ($goal eq 'delete') then $goal else 'update'
     let $control := globals:doc('application-uri')/Application/Security/Documents/Document[@Root = $root]
     return
