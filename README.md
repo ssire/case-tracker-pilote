@@ -1,6 +1,11 @@
 Case tracker pilote
 =======
 
+    WARNING (August 2017)
+    The Case tracker pilote is temporarily broken while we are refactoring 
+    the XQuery Content Management Library.
+    This warning will be removed when Case tracker pilote will ba available again.
+
 The case tracker pilote application is a demonstration application built with the [XQuery Content Management Library](https://github.com/ssire/xquery-cm-lib) (XCM). It follows the principles described in this [software documentation manual](https://github.com/ssire/case-tracker-manual).
 
 You can use the case tracker pilote as a scaffold to create all kind of content management applications with workflow management, semi-structured content editing, formular generation and e-mail output. The best way to start a new application is to clone the XQuery Content Management Library and to copy or clone the case tracker pilote project as explained in the installation notes below.
@@ -92,6 +97,7 @@ You may change the name of the main collection (i.e. *ctracker*) if you wish. Fo
 * `globals.xqm` : do a search and replace `/cctracker/` with your new collection name inside all the variable declarations of the form `$globals:`XXX`-uri`
 * `controller.xql` (line 51) : let $mapping := fn:doc('/db/www/ctracker/config/mapping.xml')/site
 * `bootstrap.sh` : edit the APPCOL variable
+* `mapping.xml` : edit the `@db` and `@confbase` attributes on the `site` root element to fit your main collection name
 
 By default the case tracker pilote application is configured to be cloned with a *pilote* project/folder name. This is the name used to obtain the application URLs in development mode (i.e. `/exist/projects/pilote`). You may change the name of the project/folder name if you wish. For that purpose, you need to edit it in :
 
